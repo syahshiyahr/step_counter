@@ -18,5 +18,4 @@ class RunFragment : Fragment() {
 
         return binding.root
     }
-
 }
