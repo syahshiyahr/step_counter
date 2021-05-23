@@ -22,7 +22,7 @@ class RunFragment : Fragment() {
     private lateinit var sensorManager: SensorManager
     private lateinit var sensor: Sensor
     private var magnitudePrevious = 0.0
-    private var stepCount = 0
+    var stepCount = 0
     var targetStep = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -30,19 +30,22 @@ class RunFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentRunBinding.inflate(inflater, container, false)
 
-
-
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        if(arguments != null){
+            val target = arguments?.getInt(ARG_TARGET)
+            targetStep = target!!
+
+            binding.tvTarget.text = "Target : ${targetStep}"
+            binding.progressCircular.progressMax = targetStep.toFloat()
+        }
 
         sensorManager = activity?.getSystemService(SENSOR_SERVICE) as SensorManager
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-
-
-        Log.d("Target Step Count", "$targetStep")
 
 
         val stepDetector = object : SensorEventListener {
@@ -65,7 +68,6 @@ class RunFragment : Fragment() {
                     binding.progressCircular.apply {
                         setProgressWithAnimation(stepCount.toFloat())
                     }
-
                 }
             }
 
@@ -73,8 +75,9 @@ class RunFragment : Fragment() {
 
             }
         }
-        sensorManager.registerListener(stepDetector, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(stepDetector, sensor, SensorManager.SENSOR_DELAY_NORMAL)
 
+        Log.d("Target", targetStep.toString())
 
         if(stepCount == targetStep){
             val mFragmentManager = fragmentManager
@@ -86,20 +89,6 @@ class RunFragment : Fragment() {
                 commit()
             }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        if(arguments != null){
-            val target = arguments?.getInt(ARG_TARGET)
-            targetStep = target!!
-
-            binding.tvTarget.text = "Target : ${targetStep}"
-            binding.progressCircular.progressMax = targetStep.toFloat()
-        }
-
-
 
     }
 
