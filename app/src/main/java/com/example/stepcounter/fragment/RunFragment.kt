@@ -68,6 +68,18 @@ class RunFragment : Fragment() {
                     binding.progressCircular.apply {
                         setProgressWithAnimation(stepCount.toFloat())
                     }
+
+                    if(stepCount == targetStep){
+                        val mFragmentManager = fragmentManager
+                        val mFragmentReached = GoalsReachedFragment()
+
+                        mFragmentManager?.beginTransaction()?.apply {
+                            replace(R.id.frame_container, mFragmentReached, GoalsReachedFragment::class.java.simpleName)
+                            addToBackStack(null)
+                            commit()
+                        }
+                    }
+
                 }
             }
 
@@ -79,16 +91,6 @@ class RunFragment : Fragment() {
 
         Log.d("Target", targetStep.toString())
 
-        if(stepCount == targetStep){
-            val mFragmentManager = fragmentManager
-            val mFragmentReached = GoalsReachedFragment()
-
-            mFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.frame_container, mFragmentReached, GoalsReachedFragment::class.java.simpleName)
-                addToBackStack(null)
-                commit()
-            }
-        }
 
     }
 

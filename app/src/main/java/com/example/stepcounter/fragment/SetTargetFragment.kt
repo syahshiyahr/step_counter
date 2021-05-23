@@ -43,6 +43,10 @@ class SetTargetFragment : Fragment() {
             }
         }
 
+        binding.btnStop.setOnClickListener {
+
+        }
+
         return binding.root
     }
 
