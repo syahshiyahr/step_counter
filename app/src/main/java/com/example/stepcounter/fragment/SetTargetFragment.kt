@@ -18,6 +18,30 @@ class SetTargetFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSetTargetBinding.inflate(inflater, container, false)
+        val mFragmentManager = fragmentManager
+
+
+        binding.plus.setOnClickListener {
+            binding.etTarget.setText("${binding.etTarget.text.toString().toInt() + 1}")
+        }
+
+        binding.minus.setOnClickListener {
+            binding.etTarget.setText("${binding.etTarget.text.toString().toInt() - 1}")
+        }
+
+        binding.btnStart.setOnClickListener {
+            val mFragmentRun = RunFragment()
+
+            val mBundle = Bundle()
+            mBundle.putInt(RunFragment.ARG_TARGET, binding.etTarget.text.toString().toInt())
+            mFragmentRun.arguments = mBundle
+
+            mFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.frame_container, mFragmentRun, RunFragment::class.java.simpleName)
+                addToBackStack(null)
+                commit()
+            }
+        }
 
         return binding.root
     }

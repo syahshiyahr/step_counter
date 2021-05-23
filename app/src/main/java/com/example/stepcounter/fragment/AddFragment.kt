@@ -17,6 +17,27 @@ class AddFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentAddBinding.inflate(inflater, container, false)
+        val mFragmentManager = fragmentManager
+
+        binding.btnStartWalking.setOnClickListener {
+            val mFragmentStart = StartFragment()
+
+            mFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.frame_container, mFragmentStart, StartFragment::class.java.simpleName)
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+        binding.btnSetGoals.setOnClickListener {
+            val mFragmentSetTarget = SetTargetFragment()
+
+            mFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.frame_container, mFragmentSetTarget, SetTargetFragment::class.java.simpleName)
+                addToBackStack(null)
+                commit()
+            }
+        }
 
         return binding.root
     }

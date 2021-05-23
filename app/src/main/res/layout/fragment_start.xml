@@ -39,7 +39,7 @@
             android:layout_marginTop="13dp"
             android:fontFamily="@font/work_sans_bold"
             android:gravity="center"
-            android:text="549"
+            android:text="0"
             android:textColor="@color/blue_accent"
             android:textSize="100sp" />
 
