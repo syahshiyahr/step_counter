@@ -21,7 +21,7 @@ import java.util.*
 class AlarmReceiver : BroadcastReceiver() {
 
     companion object {
-        const val TYPE_REPEATING = "Github App"
+        const val TYPE_REPEATING = "Step Counter"
         const val EXTRA_MESSAGE = "message"
         var isSet = false
 
@@ -38,15 +38,16 @@ class AlarmReceiver : BroadcastReceiver() {
 
     }
 
-    fun setRepeatingAlarm(context: Context, type: String, time: String, message: String) {
-        if (isDateInvalid(time, TIME_FORMAT)) return
+    fun setRepeatingAlarm(context: Context, type: String) {
+        //val time = "22:07"
+        //if (isDateInvalid(time, TIME_FORMAT)) return
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)
-        intent.putExtra(EXTRA_MESSAGE, message)
-        val timeArray = time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        intent.putExtra(EXTRA_MESSAGE, "Don't forget to walk today. Let's go out and have a fresh breath.")
+        //val timeArray = time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]))
-        calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]))
+        calendar.set(Calendar.HOUR_OF_DAY, 22)
+        calendar.set(Calendar.MINUTE, 21)
         calendar.set(Calendar.SECOND, 0)
         val pendingIntent = PendingIntent.getBroadcast(context, ID_REPEATING, intent, 0)
         alarmManager.setInexactRepeating(

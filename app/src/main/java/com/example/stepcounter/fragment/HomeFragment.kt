@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stepcounter.GoalsReachedActivity
 import com.example.stepcounter.R
+import com.example.stepcounter.SettingActivity
 import com.example.stepcounter.adapter.HistoryAdapter
 import com.example.stepcounter.databinding.FragmentHomeBinding
 import com.example.stepcounter.db.StoryHelper
@@ -49,13 +50,8 @@ class HomeFragment : Fragment() {
             }
         }
         binding.btnSetting.setOnClickListener {
-            val mFragmentSetting = MyPreferenceFragment()
-
-            mFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.frame_container, mFragmentSetting, MyPreferenceFragment::class.java.simpleName)
-                addToBackStack(null)
-                commit()
-            }
+            val intent = Intent(context, SettingActivity::class.java)
+            startActivity(intent)
         }
 
         if (savedInstanceState == null){

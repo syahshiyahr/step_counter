@@ -32,8 +32,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat(),
             if (isSetReminder.isChecked) {
                 context?.let {
                     alarmReceiver.setRepeatingAlarm(
-                        it, AlarmReceiver.TYPE_REPEATING,
-                        "09:00", "Let's find popular user on Github!"
+                        it, AlarmReceiver.TYPE_REPEATING
                     )
                 }
             } else {
