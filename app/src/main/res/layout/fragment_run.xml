@@ -111,6 +111,23 @@
             app:cornerRadius="30dp"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_pause"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pause"
+            android:backgroundTint="@color/purple_button"
+            android:fontFamily="@font/work_sans_medium"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:padding="15dp"
+            android:layout_marginTop="64dp"
+            app:icon="@drawable/ic_baseline_pause_24"
+            app:iconPadding="12dp"
+            app:iconGravity="textStart"
+            android:visibility="gone"
+            app:cornerRadius="30dp"/>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_stop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

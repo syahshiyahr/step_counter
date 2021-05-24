@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Congratulations !"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:fontFamily="@font/work_sans_semibold"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
@@ -50,8 +50,8 @@
         android:layout_marginTop="80dp"
         android:text="2500"
         android:gravity="center"
-        android:fontFamily="@font/work_sans_semibold"
-        android:textSize="50sp"
+        android:fontFamily="@font/work_sans_bold"
+        android:textSize="88sp"
         android:textColor="@color/blue_accent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv2500"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_start"
+        android:id="@+id/btn_share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Share to Twitter"
@@ -84,7 +84,7 @@
         app:cornerRadius="30dp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_stop"
+        android:id="@+id/btn_back_to_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Back to Home"

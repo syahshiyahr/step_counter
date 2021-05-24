@@ -62,7 +62,37 @@ class StartFragment : Fragment() {
 
             }
         }
-        sensorManager.registerListener(stepDetector, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+        binding.btnStart.setOnClickListener {
+            sensorManager.registerListener(stepDetector, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+            binding.btnPause.visibility = View.VISIBLE
+            binding.btnStart.visibility = View.GONE
+        }
+
+        binding.btnPause.setOnClickListener {
+            sensorManager.unregisterListener(stepDetector, sensor)
+            binding.btnPause.visibility = View.GONE
+            binding.btnStart.visibility = View.VISIBLE
+        }
+
+        binding.btnStop.setOnClickListener {
+            val mFragmentManager = fragmentManager
+            val mFragmentReached = GoalsReachedFragment()
+
+            val mBundle = Bundle()
+            mBundle.putInt(GoalsReachedFragment.ARG_TARGET, stepCount)
+            mFragmentReached.arguments = mBundle
+
+            while (mFragmentManager?.getBackStackEntryCount()!! > 0) {
+                mFragmentManager?.popBackStackImmediate()
+            }
+
+            mFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.frame_container, mFragmentReached, GoalsReachedFragment::class.java.simpleName)
+                addToBackStack(null)
+                commitAllowingStateLoss()
+            }
+        }
 
         return binding.root
     }

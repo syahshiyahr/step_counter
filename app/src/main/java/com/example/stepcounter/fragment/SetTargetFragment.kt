@@ -21,6 +21,8 @@ class SetTargetFragment : Fragment() {
         val mFragmentManager = fragmentManager
 
 
+
+
         binding.plus.setOnClickListener {
             binding.etTarget.setText("${binding.etTarget.text.toString().toInt() + 1}")
         }
