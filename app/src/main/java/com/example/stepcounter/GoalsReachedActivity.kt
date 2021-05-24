@@ -31,8 +31,8 @@ class GoalsReachedActivity : AppCompatActivity() {
 
         binding.btnBackToHome.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
-            finish()
         }
 
         setContentView(binding.root)
@@ -68,8 +68,8 @@ class GoalsReachedActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         val intent = Intent(this, MainActivity::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
-        finish()
     }
 
 

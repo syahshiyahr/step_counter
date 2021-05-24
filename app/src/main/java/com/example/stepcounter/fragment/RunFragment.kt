@@ -71,21 +71,24 @@ class RunFragment : Fragment() {
                             if (delta > 6) {
                                 stepCount++
                             }
-                            binding.tvCountSteps.text = stepCount.toString()
 
                             binding.progressCircular.apply {
-                                setProgressWithAnimation(stepCount.toFloat())
-                            }
-                            if (stepCount == targetStep) {
-                                val intent =
-                                    Intent(context, GoalsReachedActivity::class.java).apply {
-                                        putExtra(GoalsReachedActivity.ARG_TARGET, targetStep)
-                                    }
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                startActivity(intent)
-                                activity!!.finish()
-                            }
+                                setProgressWithAnimation(stepCount.toFloat(), 0)
+                                if(stepCount < targetStep + 1){
+                                    binding.tvCountSteps.text = stepCount.toString()
+                                }
 
+                                if (stepCount == targetStep) {
+                                    val intent =
+                                        Intent(context, GoalsReachedActivity::class.java).apply {
+                                            putExtra(GoalsReachedActivity.ARG_TARGET, targetStep)
+                                        }
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    startActivity(intent)
+                                    activity!!.finish()
+                                }
+
+                            }
                         }
                     }
 
