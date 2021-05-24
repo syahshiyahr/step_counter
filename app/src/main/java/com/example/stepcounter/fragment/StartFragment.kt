@@ -3,6 +3,7 @@ package com.example.stepcounter.fragment
 import android.Manifest
 import android.content.Context
 import android.content.Context.SENSOR_SERVICE
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
+import com.example.stepcounter.GoalsReachedActivity
 import com.example.stepcounter.R
 import com.example.stepcounter.databinding.FragmentStartBinding
 import kotlin.math.sqrt
@@ -76,22 +78,13 @@ class StartFragment : Fragment() {
         }
 
         binding.btnStop.setOnClickListener {
-            val mFragmentManager = fragmentManager
-            val mFragmentReached = GoalsReachedFragment()
-
-            val mBundle = Bundle()
-            mBundle.putInt(GoalsReachedFragment.ARG_TARGET, stepCount)
-            mFragmentReached.arguments = mBundle
-
-            while (mFragmentManager?.getBackStackEntryCount()!! > 0) {
-                mFragmentManager?.popBackStackImmediate()
-            }
-
-            mFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.frame_container, mFragmentReached, GoalsReachedFragment::class.java.simpleName)
-                addToBackStack(null)
-                commitAllowingStateLoss()
-            }
+            val intent =
+                Intent(context, GoalsReachedActivity::class.java).apply {
+                    putExtra(GoalsReachedActivity.ARG_TARGET, stepCount)
+                }
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            activity!!.finish()
         }
 
         return binding.root

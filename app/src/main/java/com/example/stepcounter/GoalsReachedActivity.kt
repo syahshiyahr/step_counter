@@ -6,9 +6,6 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.stepcounter.databinding.ActivityGoalsReachedBinding
-import com.example.stepcounter.fragment.GoalsReachedFragment
-import com.example.stepcounter.fragment.HomeFragment
-import com.example.stepcounter.fragment.RunFragment
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 
@@ -36,6 +33,7 @@ class GoalsReachedActivity : AppCompatActivity() {
         binding.btnBackToHome.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         setContentView(binding.root)

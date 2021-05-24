@@ -79,10 +79,11 @@ class RunFragment : Fragment() {
                             if (stepCount == targetStep) {
                                 val intent =
                                     Intent(context, GoalsReachedActivity::class.java).apply {
-                                        putExtra(GoalsReachedFragment.ARG_TARGET, targetStep)
+                                        putExtra(GoalsReachedActivity.ARG_TARGET, targetStep)
                                     }
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                 startActivity(intent)
+                                activity!!.finish()
                             }
 
                         }
