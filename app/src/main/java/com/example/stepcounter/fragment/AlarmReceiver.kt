@@ -95,8 +95,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, 0)
         pendingIntent.cancel()
         alarmManager.cancel(pendingIntent)
-        Toast.makeText(context, "Cancel", Toast.LENGTH_SHORT)
-            .show()
+        Toast.makeText(context, "Cancel", Toast.LENGTH_SHORT).show()
         isSet = false
     }
 
@@ -121,6 +120,9 @@ class AlarmReceiver : BroadcastReceiver() {
             .setColor(ContextCompat.getColor(context, android.R.color.transparent))
             .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
             .setSound(alarmSound)
+
+        builder.setAutoCancel(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
