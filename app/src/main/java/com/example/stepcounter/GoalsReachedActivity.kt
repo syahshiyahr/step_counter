@@ -5,6 +5,7 @@ import android.content.pm.ResolveInfo
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.stepcounter.databinding.ActivityGoalsReachedBinding
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
@@ -17,14 +18,12 @@ class GoalsReachedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGoalsReachedBinding.inflate(layoutInflater)
 
-        val mFragmentManager = fragmentManager
-
-        if(savedInstanceState != null){
-            val target = savedInstanceState.getInt(ARG_TARGET)
+            val target = intent.getIntExtra(ARG_TARGET, 0)
             targetReached = target!!
+            Log.d("Target Goals ", targetReached.toString())
 
             binding.tvStepsReached.text = targetReached.toString()
-        }
+
 
         binding.btnShare.setOnClickListener {
             twitterAction()
