@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StepCounter">
         <receiver
-            android:name=".fragment.AlarmReceiver"
+            android:name=".AlarmReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
 

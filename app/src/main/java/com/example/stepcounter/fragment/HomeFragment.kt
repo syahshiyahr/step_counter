@@ -49,10 +49,10 @@ class HomeFragment : Fragment() {
             }
         }
         binding.btnSetting.setOnClickListener {
-            val mFragmentSetting = SettingFragment()
+            val mFragmentSetting = MyPreferenceFragment()
 
             mFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.frame_container, mFragmentSetting, SettingFragment::class.java.simpleName)
+                replace(R.id.frame_container, mFragmentSetting, MyPreferenceFragment::class.java.simpleName)
                 addToBackStack(null)
                 commit()
             }
