@@ -31,12 +31,14 @@ class MyPreferenceFragment : PreferenceFragmentCompat(),
             isSetReminder.isChecked = sharedPreferences.getBoolean(SET, false)
             if (isSetReminder.isChecked) {
                 context?.let {
-                    alarmReceiver.setRepeatingAlarm(
-                        it, AlarmReceiver.TYPE_REPEATING
-                    )
+//                    alarmReceiver.setRepeatingAlarm(
+//                        it, AlarmReceiver.TYPE_REPEATING
+//                    )
+                    alarmReceiver.setOneTimeAlarm(context!!, AlarmReceiver.TYPE_ONE_TIME, "Don't forget to walk today. Let's go out and have a fresh breath.")
                 }
+
             } else {
-                context?.let { alarmReceiver.cancelAlarm(it, AlarmReceiver.TYPE_REPEATING) }
+                context?.let { alarmReceiver.cancelAlarm(it, AlarmReceiver.TYPE_ONE_TIME) }
             }
         }
     }
