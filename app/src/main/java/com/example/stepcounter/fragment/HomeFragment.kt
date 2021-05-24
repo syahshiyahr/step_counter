@@ -19,13 +19,22 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val mFragmentManager = fragmentManager
 
         binding.btnRun.setOnClickListener {
-            val mFragmentManager = fragmentManager
             val mFragmentAdd = AddFragment()
 
             mFragmentManager?.beginTransaction()?.apply {
                 replace(R.id.frame_container, mFragmentAdd, AddFragment::class.java.simpleName)
+                addToBackStack(null)
+                commit()
+            }
+        }
+        binding.btnSetting.setOnClickListener {
+            val mFragmentSetting = SettingFragment()
+
+            mFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.frame_container, mFragmentSetting, SettingFragment::class.java.simpleName)
                 addToBackStack(null)
                 commit()
             }
