@@ -31,8 +31,10 @@ class RunFragment : Fragment() {
     var stepCount = 0
     var targetStep = 0
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         binding = FragmentRunBinding.inflate(inflater, container, false)
         binding.ivBack.setOnClickListener {
@@ -46,7 +48,7 @@ class RunFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val mFragmentManager = fragmentManager
 
-        if(arguments != null){
+        if (arguments != null) {
             val target = arguments?.getInt(ARG_TARGET)
             targetStep = target!!
 
@@ -54,92 +56,88 @@ class RunFragment : Fragment() {
             binding.progressCircular.progressMax = targetStep.toFloat()
         }
 
-        lifecycleScope.launch(Dispatchers.Default) {
-            withContext(Dispatchers.Main) {
-                sensorManager = activity?.getSystemService(SENSOR_SERVICE) as SensorManager
-                sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        sensorManager = activity?.getSystemService(SENSOR_SERVICE) as SensorManager
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
-                val stepDetector = object : SensorEventListener {
-                    override fun onSensorChanged(event: SensorEvent?) {
-                        if (event != null) {
-                            val x_acceleration = event.values[0]
-                            val y_acceleration = event.values[1]
-                            val z_acceleration = event.values[2]
+        val stepDetector = object : SensorEventListener {
+            override fun onSensorChanged(event: SensorEvent?) {
+                if (event != null) {
+                    val x_acceleration = event.values[0]
+                    val y_acceleration = event.values[1]
+                    val z_acceleration = event.values[2]
 
-                            val magnitude =
-                                sqrt(x_acceleration * x_acceleration + y_acceleration * y_acceleration + z_acceleration * z_acceleration)
-                            val delta = magnitude - magnitudePrevious;
-                            magnitudePrevious = magnitude.toDouble()
+                    val magnitude =
+                        sqrt(x_acceleration * x_acceleration + y_acceleration * y_acceleration + z_acceleration * z_acceleration)
+                    val delta = magnitude - magnitudePrevious;
+                    magnitudePrevious = magnitude.toDouble()
 
-                            if (delta > 6) {
-                                stepCount++
-                            }
+                    if (delta > 6) {
+                        stepCount++
+                    }
 
-                            binding.progressCircular.apply {
-                                setProgressWithAnimation(stepCount.toFloat(), 0)
-                                if(stepCount < targetStep + 1){
-                                    binding.tvCountSteps.text = stepCount.toString()
-                                }
-
-                                if (stepCount == targetStep) {
-                                    val intent =
-                                        Intent(context, GoalsReachedActivity::class.java).apply {
-                                            putExtra(GoalsReachedActivity.ARG_TARGET, targetStep)
-                                        }
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                    startActivity(intent)
-                                    activity!!.finish()
-                                }
-
-                            }
+                    binding.progressCircular.apply {
+                        setProgressWithAnimation(stepCount.toFloat(), 0)
+                        if (stepCount < targetStep + 1) {
+                            binding.tvCountSteps.text = stepCount.toString()
                         }
-                    }
 
-                    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+                        if (stepCount == targetStep) {
+                            val intent =
+                                Intent(context, GoalsReachedActivity::class.java).apply {
+                                    putExtra(GoalsReachedActivity.ARG_TARGET, targetStep)
+                                }
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                            activity!!.finish()
+                        }
 
-                    }
-                }
-
-                binding.btnStart.setOnClickListener {
-                    binding.btnPause.visibility = View.VISIBLE
-                    binding.btnStart.visibility = View.GONE
-                    sensorManager.registerListener(
-                        stepDetector,
-                        sensor,
-                        SensorManager.SENSOR_DELAY_NORMAL
-                    )
-
-                }
-
-                binding.btnPause.setOnClickListener {
-                    sensorManager.unregisterListener(stepDetector, sensor)
-                    binding.btnPause.visibility = View.GONE
-                    binding.btnStart.visibility = View.VISIBLE
-                }
-
-                binding.btnStop.setOnClickListener {
-                    val mFragmentHome = HomeFragment()
-
-                    while (mFragmentManager?.getBackStackEntryCount()!! > 0) {
-                        mFragmentManager?.popBackStackImmediate()
-                    }
-
-                    mFragmentManager?.beginTransaction()?.apply {
-                        replace(
-                            R.id.frame_container,
-                            mFragmentHome,
-                            HomeFragment::class.java.simpleName
-                        )
-                        addToBackStack(null)
-                        commit()
                     }
                 }
+            }
 
+            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
 
-
-                Log.d("Target", targetStep.toString())
             }
         }
+
+        binding.btnStart.setOnClickListener {
+            binding.btnPause.visibility = View.VISIBLE
+            binding.btnStart.visibility = View.GONE
+            sensorManager.registerListener(
+                stepDetector,
+                sensor,
+                SensorManager.SENSOR_DELAY_NORMAL
+            )
+
+        }
+
+        binding.btnPause.setOnClickListener {
+            sensorManager.unregisterListener(stepDetector, sensor)
+            binding.btnPause.visibility = View.GONE
+            binding.btnStart.visibility = View.VISIBLE
+        }
+
+        binding.btnStop.setOnClickListener {
+            val mFragmentHome = HomeFragment()
+
+            while (mFragmentManager?.getBackStackEntryCount()!! > 0) {
+                mFragmentManager?.popBackStackImmediate()
+            }
+
+            mFragmentManager?.beginTransaction()?.apply {
+                replace(
+                    R.id.frame_container,
+                    mFragmentHome,
+                    HomeFragment::class.java.simpleName
+                )
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+
+
+        Log.d("Target", targetStep.toString())
     }
 
 

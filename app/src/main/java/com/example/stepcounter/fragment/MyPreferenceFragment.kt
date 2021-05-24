@@ -42,9 +42,9 @@ class MyPreferenceFragment : PreferenceFragmentCompat(),
     }
 
     private fun setSummaries() {
+        //untuk menyimpan nilai yang baru sesuai dengan data yang tersimpan.
         val sh = preferenceManager.sharedPreferences
         isSetReminder.isChecked = sh.getBoolean(SET, false)
-
     }
 
     override fun onResume() {

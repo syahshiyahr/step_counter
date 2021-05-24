@@ -31,14 +31,17 @@ class GoalsReachedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGoalsReachedBinding.inflate(layoutInflater)
-        val target = intent.getIntExtra(ARG_TARGET, 0)
-        targetReached = target!!
-        Log.d("Target Goals ", targetReached.toString())
+        setContentView(binding.root)
 
-        binding.tvStepsReached.text = targetReached.toString()
+        //share ke twitter
         binding.btnShare.setOnClickListener {
             twitterAction()
         }
+
+        //nge get data dari fragment sebelumnya
+        val target = intent.getIntExtra(ARG_TARGET, 0)
+        targetReached = target!!
+        binding.tvStepsReached.text = targetReached.toString()
 
         //add to history
         helper = StoryHelper.getInstance(applicationContext)
@@ -49,8 +52,6 @@ class GoalsReachedActivity : AppCompatActivity() {
         binding.btnBackToHome.setOnClickListener {
             saveHistory()
         }
-
-        setContentView(binding.root)
     }
 
     private fun saveHistory() {
@@ -67,8 +68,6 @@ class GoalsReachedActivity : AppCompatActivity() {
         values.put(DATE, getCurrentDate())
         values.put(TIME, getCurrentTime())
         val result = helper.insert(values)
-
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
 
         if(result > 0){
             history?.id = result.toInt()
@@ -101,6 +100,7 @@ class GoalsReachedActivity : AppCompatActivity() {
                 "https://twitter.com/intent/tweet?text=%s",
                 urlEncode("Yay! I succeed to walk ${targetReached} steps today. Let's go out and walk with Step Counter!")
         )
+
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(tweetUrl))
 
         // Narrow down to official Twitter app, if available:

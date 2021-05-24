@@ -49,6 +49,7 @@ class HomeFragment : Fragment() {
                 commit()
             }
         }
+
         binding.btnSetting.setOnClickListener {
             val intent = Intent(context, SettingActivity::class.java)
             startActivity(intent)
@@ -66,16 +67,19 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    //background thread untuk mengambil data dari database
     private fun loadHistoryAsync() {
         GlobalScope.launch(Dispatchers.Main){
             val historyHelper = StoryHelper.getInstance(activity!!.applicationContext)
             historyHelper.open()
             val defferedHistory = async(Dispatchers.IO){
                 val cursor = historyHelper.queryAll()
+                //ngubah ke dalam bentuk array list
                 MappingHelper.mapCursorToArrayList(cursor)
             }
-//            historyHelper.close()
+
             val history = defferedHistory.await()
+
             if(history.size > 0){
                 adapter.listNotes = history
             }else{
@@ -91,6 +95,7 @@ class HomeFragment : Fragment() {
             when (requestCode){
                 GoalsReachedActivity.REQUEST_ADD-> if(resultCode == GoalsReachedActivity.RESULT_ADD){
                     val history = data.getParcelableExtra<History>(GoalsReachedActivity.EXTRA_HISTORY) as History
+                    //nampilin data dari halaman sebelumnya ke recycle view
                     adapter.addItem(history)
                     binding.rvHistory.smoothScrollToPosition(adapter.itemCount - 1)
 

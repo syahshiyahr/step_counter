@@ -3,6 +3,7 @@
     package="com.example.stepcounter">
 
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -14,7 +15,7 @@
         <activity android:name=".SettingActivity"></activity>
 
         <receiver
-            android:name=".AlarmReceiver"
+            android:name=".fragment.AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
 
