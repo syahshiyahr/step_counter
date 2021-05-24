@@ -4,8 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class history(
+data class History(
         var id: Int=0,
         var target: Int=0,
-        var date: String? = null
+        var date: String? = null,
+        var time: String? = null
 ) : Parcelable

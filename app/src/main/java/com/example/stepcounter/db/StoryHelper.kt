@@ -43,8 +43,7 @@ class StoryHelper(context: Context) {
             null,
             null,
             null,
-            "$_ID ASC",
-            null)
+            "$_ID ASC")
     }
 
     fun queryById(id: String): Cursor {
