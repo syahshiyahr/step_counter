@@ -92,21 +92,6 @@
             android:layout_marginTop="64dp"
             app:cornerRadius="30dp"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_stop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Save Goals &amp; Run Later"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            app:strokeColor="@color/purple_button"
-            android:textColor="@color/purple_button"
-            android:fontFamily="@font/work_sans_medium"
-            android:textSize="20sp"
-            android:textAllCaps="false"
-            android:padding="15dp"
-            android:layout_marginTop="16dp"
-            app:cornerRadius="30dp"/>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

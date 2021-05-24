@@ -4,10 +4,10 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.ResolveInfo
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.stepcounter.databinding.ActivityGoalsReachedBinding
 import com.example.stepcounter.db.DatabaseContract.NoteColumns.Companion.DATE
 import com.example.stepcounter.db.DatabaseContract.NoteColumns.Companion.TARGET
@@ -47,34 +47,39 @@ class GoalsReachedActivity : AppCompatActivity() {
         history = History()
 
         binding.btnBackToHome.setOnClickListener {
-            history?.date = getCurrentDate()
-            history?.time = getCurrentTime()
-            history?.target = targetReached
-
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra(EXTRA_HISTORY, history)
-            intent.putExtra(EXTRA_POSITION, position)
-
-            val values = ContentValues()
-            values.put(TARGET, targetReached)
-            values.put(DATE, getCurrentDate())
-            values.put(TIME, getCurrentTime())
-            val result = helper.insert(values)
-
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
-            if(result > 0){
-                history?.id = result.toInt()
-                setResult(RESULT_ADD, intent)
-                finish()
-            }
-
-            Toast.makeText(this, "Satu item berhasil disimpan", Toast.LENGTH_SHORT).show()
-            startActivity(intent)
-            finish()
+            saveHistory()
         }
 
         setContentView(binding.root)
+    }
+
+    private fun saveHistory() {
+        history?.date = getCurrentDate()
+        history?.time = getCurrentTime()
+        history?.target = targetReached
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra(EXTRA_HISTORY, history)
+        intent.putExtra(EXTRA_POSITION, position)
+
+        val values = ContentValues()
+        values.put(TARGET, targetReached)
+        values.put(DATE, getCurrentDate())
+        values.put(TIME, getCurrentTime())
+        val result = helper.insert(values)
+
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+        if(result > 0){
+            history?.id = result.toInt()
+            setResult(RESULT_ADD, intent)
+            finish()
+        }
+
+        Toast.makeText(this, "Satu item berhasil disimpan", Toast.LENGTH_SHORT).show()
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        finish()
     }
 
     private fun getCurrentTime(): String {
@@ -120,9 +125,7 @@ class GoalsReachedActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent(this, MainActivity::class.java)
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
+        saveHistory()
     }
 
     companion object {

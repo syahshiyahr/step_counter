@@ -21,14 +21,15 @@ class SetTargetFragment : Fragment() {
         val mFragmentManager = fragmentManager
 
 
-
-
         binding.plus.setOnClickListener {
             binding.etTarget.setText("${binding.etTarget.text.toString().toInt() + 1}")
         }
 
         binding.minus.setOnClickListener {
-            binding.etTarget.setText("${binding.etTarget.text.toString().toInt() - 1}")
+            if (binding.etTarget.text.toString().toInt() > 0) {
+                binding.etTarget.setText("${binding.etTarget.text.toString().toInt() - 1}")
+            }
+
         }
 
         binding.btnStart.setOnClickListener {
@@ -45,8 +46,8 @@ class SetTargetFragment : Fragment() {
             }
         }
 
-        binding.btnStop.setOnClickListener {
-
+        binding.ivBack.setOnClickListener {
+            requireActivity().onBackPressed()
         }
 
         return binding.root

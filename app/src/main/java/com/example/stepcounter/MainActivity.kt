@@ -67,8 +67,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finishAffinity()
-    }
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        finishAffinity()
+//    }
 }

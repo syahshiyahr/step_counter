@@ -35,6 +35,9 @@ class RunFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentRunBinding.inflate(inflater, container, false)
+        binding.ivBack.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
 
         return binding.root
     }
@@ -138,6 +141,7 @@ class RunFragment : Fragment() {
             }
         }
     }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

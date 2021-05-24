@@ -39,6 +39,10 @@ class AddFragment : Fragment() {
             }
         }
 
+        binding.ivBack.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         return binding.root
     }
 

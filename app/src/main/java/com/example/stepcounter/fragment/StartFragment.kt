@@ -87,6 +87,10 @@ class StartFragment : Fragment() {
             activity!!.finish()
         }
 
+        binding.ivBack.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         return binding.root
     }
 
